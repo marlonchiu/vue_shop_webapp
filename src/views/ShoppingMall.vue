@@ -33,6 +33,7 @@
     <div class="ad-banner">
       <img v-lazy="adBanner.PICTURE_ADDRESS" width="100%">
     </div>
+    <!-- <swiper-default /> -->
     <!-- recommend  goods area -->
     <div class="recommend-area">
       <div class="recommend-title">商品推荐</div>
@@ -49,8 +50,10 @@
         </swiper>
       </div>
     </div>
-
-
+    <!-- floor area -->
+    <floor-component :floorData="floor1"></floor-component>
+    <floor-component :floorData="floor2"></floor-component>
+    <floor-component :floorData="floor3"></floor-component>
   </div>
 </template>
 
@@ -59,6 +62,8 @@
   import 'swiper/dist/css/swiper.css'
   import { swiper, swiperSlide } from 'vue-awesome-swiper'
   import url from '@/api/serviceAPI.config.js'
+  // import SwiperDefault from '../components/swiper/swiper-default4'
+  import FloorComponent from '@/components/floor-component'
   export default {
     name: 'ShoppingMall',
     data () {
@@ -106,8 +111,10 @@
       })
     },
     components: {
+      // SwiperDefault,
       swiper,
-      swiperSlide
+      swiperSlide,
+      FloorComponent
     }
   }
 </script>
