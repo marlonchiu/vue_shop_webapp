@@ -6,31 +6,18 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
     <title>vue_shop_webapp</title>
-    <style>
-      .test{
-        width:20rem;
-        height:10rem;
-        background-color: bisque;
-        text-align: center;
-      }
-      .hello{
-        color:red;
-        font-size: 1rem;
-      }
-    </style>
   </head>
   <body>
     <noscript>
       <strong>We're sorry but vue_shop_webapp doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     </noscript>
     <div id="app"></div>
-    <div class="test">
-      <p class="hello">Hello jspang</p>
-    </div>
     <script type="text/javascript">
       // 移动端屏幕适配(标准的iphone5 320px 对应20rem 及 fontSize=16)
       // 得到手机屏幕的宽度
       let htmlWidth = document.documentElement.clientWidth || document.body.clientWidth
+      // 页面宽度大于750px时，我们就把页面的宽度设置成750像素
+      if( htmlWidth > 750) { htmlWidth = 750 }
       // 得到html的Dom元素
       let htmlDom = document.getElementsByTagName('html')[0]
       // 设置根元素的字体大小
