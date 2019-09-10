@@ -44,7 +44,7 @@
             <div class="recommend-item">
               <img :src='item.image' width="80%"/>
               <div>{{item.goodsName}}</div>
-              <div>￥{{item.price}} (￥{{item.mallPrice}})</div>
+              <div>￥{{item.price | moneyFilter}} (￥{{item.mallPrice | moneyFilter}})</div>
             </div>
           </swiper-slide>
         </swiper>
@@ -54,16 +54,37 @@
     <floor-component :floorData="floor1" :floorTitle="floorName.floor1"></floor-component>
     <floor-component :floorData="floor2" :floorTitle="floorName.floor2"></floor-component>
     <floor-component :floorData="floor3" :floorTitle="floorName.floor3"></floor-component>
+    <!--Hot Area-->
+    <div class="hot-area">
+      <div class="hot-title">热卖商品</div>
+      <div class="hot-goods">
+        <!--这里需要一个list组件-->
+        <van-list>
+          <!-- 通过gutter属性可以设置列元素之间的间距，默认间距为 0 -->
+          <van-row gutter="20">
+            <van-col span="12" v-for="(item, index) in hotGoods" :key="index">
+              <goods-info-component
+                :goodsImage="item.image"
+                :goodsName='item.name'
+                :goodsPrice="item.price"
+              />
+            </van-col>
+          </van-row>
+        </van-list>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
   import axios from 'axios'
+  import url from '@/api/serviceAPI.config.js'
+  import { toMoney } from '@/filter/moneyFilter.js'
   import 'swiper/dist/css/swiper.css'
   import { swiper, swiperSlide } from 'vue-awesome-swiper'
-  import url from '@/api/serviceAPI.config.js'
   // import SwiperDefault from '../components/swiper/swiper-default4'
   import FloorComponent from '@/components/floor-component'
+  import GoodsInfoComponent from '@/components/goods-info-component'
   export default {
     name: 'ShoppingMall',
     data () {
@@ -110,11 +131,17 @@
         console.log(error)
       })
     },
+    filters: {
+      moneyFilter(money) {
+        return toMoney(money)
+      }
+    },
     components: {
       // SwiperDefault,
       swiper,
       swiperSlide,
-      FloorComponent
+      FloorComponent,
+      GoodsInfoComponent
     }
   }
 </script>
@@ -174,4 +201,10 @@
         border-right 1px solid #eee
         font-size 12px
         text-align center
+  .hot-area
+    text-align center
+    font-size 14px
+    height 1.8rem
+    line-height 1.8rem
+
 </style>
