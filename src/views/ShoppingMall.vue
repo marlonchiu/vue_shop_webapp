@@ -51,9 +51,9 @@
       </div>
     </div>
     <!-- floor area -->
-    <floor-component :floorData="floor1"></floor-component>
-    <floor-component :floorData="floor2"></floor-component>
-    <floor-component :floorData="floor3"></floor-component>
+    <floor-component :floorData="floor1" :floorTitle="floorName.floor1"></floor-component>
+    <floor-component :floorData="floor2" :floorTitle="floorName.floor2"></floor-component>
+    <floor-component :floorData="floor3" :floorTitle="floorName.floor3"></floor-component>
   </div>
 </template>
 

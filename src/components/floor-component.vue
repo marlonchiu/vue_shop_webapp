@@ -1,6 +1,7 @@
 <template>
   <!-- floor one area -->
   <div class="floor-area">
+    <div class="floor-title"> {{floorTitle}} </div>
     <div class="floor-anomaly">
       <div class="floor-left">
         <img :src="floorData0.image" width="100%" />
@@ -22,6 +23,10 @@
   export default {
     name: 'FloorComponent',
     props: {
+      floorTitle: {
+        type: String,
+        default: '楼层组件'
+      },
       floorData: {
         type: Array,
         default: () => []
@@ -48,6 +53,11 @@
 <style lang="stylus" rel="stylesheet/stylus" scoped>
   .floor-area
     background #ffffff
+    .floor-title
+      text-align center
+      font-size 14px
+      height 1.8rem
+      line-height 1.8rem
     .floor-anomaly
       display flex
       flex-direction row
