@@ -15,6 +15,6 @@
   }
 </script>
 
-<style lang="scss" scoped>
+<style lang="stylus" rel="stylesheet/stylus" scoped>
 
 </style>

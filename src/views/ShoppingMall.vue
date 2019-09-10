@@ -22,11 +22,19 @@
         </van-swipe-item>
       </van-swipe>
     </div>
+    <!-- type bar -->
+    <div class="type-bar">
+      <div class="type-bar-item" v-for="(cate, index) in category" :key="index">
+        <img width="90%" v-lazy="cate.image" alt=""/>
+        <span>{{cate.mallCategoryName}}</span>
+      </div>
+    </div>
 
   </div>
 </template>
 
 <script>
+  import axios from 'axios'
   export default {
     name: 'ShoppingMall',
     data () {
@@ -36,8 +44,19 @@
           {imgUrl: 'http://images.baixingliangfan.cn/advertesPicture/20180407/20180407175040_1780.jpg'},
           {imgUrl: 'http://images.baixingliangfan.cn/advertesPicture/20180407/20180407175111_9509.jpg'},
           {imgUrl: 'http://images.baixingliangfan.cn/advertesPicture/20180407/20180407175142_6947.jpg'}
-        ]
+        ],
+        category: []
       }
+    },
+    created () {
+      axios({
+         url: 'https://www.easy-mock.com/mock/5ae2eeb23fbbf24d8cd7f0b6/SmileVue/',
+         method: 'get'
+      }).then(response => {
+        console.log(response)
+      }).catch((error) => {
+        console.log(error)
+      })
     }
   }
 </script>
@@ -69,4 +88,16 @@
     max-height 12rem
     overflow hidden
     clear both
+  .type-bar
+    background #ffffff
+    margin 0 .3rem .3rem .3rem
+    border-radius .3rem
+    font-size 14px
+    display flex
+    flex-direction row
+    flex-wrap nowrap
+    .type-bar-item
+      padding 0.3rem
+      font-size 12px
+      text-align center
 </style>
