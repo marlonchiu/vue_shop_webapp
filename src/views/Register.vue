@@ -12,8 +12,8 @@
         required
         clearable
         label="用户名"
-        right-icon="question-o"
         placeholder="请输入用户名"
+        :error-message="userNameErrorMsg"
       />
 
       <van-field
@@ -22,10 +22,12 @@
         label="密码"
         placeholder="请输入密码"
         required
+        :error-message="passwordErrorMsg"
       />
       <div class="register-button">
         <van-button type="primary" size="large"
-        @click="submitRegisterUser">马上注册</van-button>
+        :loading="openLoading"
+        @click="registerAction">马上注册</van-button>
       </div>
     </div>
   </div>
@@ -40,14 +42,38 @@ export default {
   data () {
     return {
       userName: '',
-      password: ''
+      password: '',
+      openLoading: false, // 是否开启用户的Loading
+      userNameErrorMsg: '', // 当用户名出现错误的时候
+      passwordErrorMsg: '' // 当密码出现错误的时候
     }
   },
   methods: {
     goBack () {
       this.$router.go(-1)
     },
+    registerAction () {
+      this.checkForm() && this.submitRegisterUser()
+    },
+    // 提交信息表单验证
+    checkForm () {
+      let isOk = true
+      if (this.userName.length < 5) {
+        this.userNameErrorMsg = '用户名不能小于5位'
+        isOk = false
+      } else {
+        this.userNameErrorMsg = ''
+      }
+      if (this.password.length < 6) {
+        this.passwordErrorMsg = '密码不能少于6位'
+        isOk = false
+      } else {
+        this.passwordErrorMsg = ''
+      }
+      return isOk
+    },
     submitRegisterUser () {
+      this.openLoading = true
       axios({
         method: 'post',
         url: url.registerUser,
@@ -59,14 +85,18 @@ export default {
         console.log(response)
         // 如果返回code为200，代表注册成功，我们给用户作Toast提示
         if (response.data.code === 200) {
-          Toast.success('注册成功')
+          // Toast.success('注册成功')
+          Toast.success(response.data.message)
+          this.$router.push('/')
         } else {
           // console.log(response.data.message)
           Toast.fail('注册失败')
+          this.openLoading = false
         }
       }).catch((error) => {
         console.log(error)
         Toast.fail('注册失败')
+        this.openLoading = false
       })
     }
   }
