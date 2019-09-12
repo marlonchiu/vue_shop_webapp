@@ -5,12 +5,14 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "serve": "node index.js"
+    "service": "node index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "koa": "^2.8.1"
+    "glob": "^7.1.4",
+    "koa": "^2.8.1",
+    "mongoose": "^5.7.0"
   }
 }

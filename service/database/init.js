@@ -1,7 +1,20 @@
+// Mongoose是一个开源的封装好的实现Node和MongoDB数据通讯的数据建模库
 const mongoose = require('mongoose')
-const db = 'mongodb://localhost/simle-db'
+const db = 'mongodb://localhost/smile-db'
+/**
+ * glob：node的glob模块允许你使用 * 等符号，来写一个glob规则，像在shell里一样，获取匹配对应规则文件。
+ * resolve: 将一系列路径或路径段解析为绝对路径。
+ */
+const glob = require('glob')
+const { resolve } = require('path')
 
-mongoose.Promise = global.Promise
+// 可以一次性引入所有的Schema文件
+// 使用了glob.sync同步引入所有的schema文件，然后用forEach的方法require（引入）进来
+exports.initSchemas = () => {
+  glob.sync(resolve(__dirname, './schema/', '**/*.js')).forEach(require)
+}
+
+// mongoose.Promise = global.Promise
 
 /**
  * 当连接断开时，我们需要把连接次数加1，
@@ -42,7 +55,6 @@ exports.connect = () => {
     // 链接打开的时候
     mongoose.connection.once('open', () => {
       console.log('MongoDB Connected successfully!')
-
       resolve()
     })
   })

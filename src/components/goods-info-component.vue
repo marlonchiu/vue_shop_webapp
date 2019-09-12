@@ -9,29 +9,29 @@
 </template>
 
 <script>
-  import { toMoney } from '@/filter/moneyFilter.js'
-  export default {
-    name: 'GoodsInfoComponent',
-    props: {
-      goodsImage: {
-        type: String,
-        default: ''
-      },
-      goodsName: {
-        type: String,
-        default: ''
-      },
-      goodsPrice: {
-        type: Number,
-        default: 0
-      },
+import { toMoney } from '@/filter/moneyFilter.js'
+export default {
+  name: 'GoodsInfoComponent',
+  props: {
+    goodsImage: {
+      type: String,
+      default: ''
     },
-    filters: {
-      moneyFilter(money) {
-        return toMoney(money)
-      }
+    goodsName: {
+      type: String,
+      default: ''
     },
+    goodsPrice: {
+      type: Number,
+      default: 0
+    }
+  },
+  filters: {
+    moneyFilter (money) {
+      return toMoney(money)
+    }
   }
+}
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>

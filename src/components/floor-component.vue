@@ -20,34 +20,34 @@
 </template>
 
 <script>
-  export default {
-    name: 'FloorComponent',
-    props: {
-      floorTitle: {
-        type: String,
-        default: '楼层组件'
-      },
-      floorData: {
-        type: Array,
-        default: () => []
-      }
+export default {
+  name: 'FloorComponent',
+  props: {
+    floorTitle: {
+      type: String,
+      default: '楼层组件'
     },
-    data() {
-      return {
-        floorData0: {},
-        floorData1: {},
-        floorData2: {}
-      }
-    },
-    watch: {
-      floorData: function(val) {
-        // console.log(this.floorData)
-        this.floorData0 = this.floorData[0]
-        this.floorData1 = this.floorData[1]
-        this.floorData2 = this.floorData[2]
-      }
+    floorData: {
+      type: Array,
+      default: () => []
+    }
+  },
+  data () {
+    return {
+      floorData0: {},
+      floorData1: {},
+      floorData2: {}
+    }
+  },
+  watch: {
+    floorData: function (val) {
+      // console.log(this.floorData)
+      this.floorData0 = this.floorData[0]
+      this.floorData1 = this.floorData[1]
+      this.floorData2 = this.floorData[2]
     }
   }
+}
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>

@@ -77,73 +77,73 @@
 </template>
 
 <script>
-  import axios from 'axios'
-  import url from '@/api/serviceAPI.config.js'
-  import { toMoney } from '@/filter/moneyFilter.js'
-  import 'swiper/dist/css/swiper.css'
-  import { swiper, swiperSlide } from 'vue-awesome-swiper'
-  // import SwiperDefault from '../components/swiper/swiper-default4'
-  import FloorComponent from '@/components/floor-component'
-  import GoodsInfoComponent from '@/components/goods-info-component'
-  export default {
-    name: 'ShoppingMall',
-    data () {
-      return {
-        swiperOption:{
-          slidesPerView:3
-        },
-        locationIcon: require('../assets/images/aui-icon-location.png'),
-        bannerArray: [
-          {image: 'http://images.baixingliangfan.cn/advertesPicture/20180407/20180407175040_1780.jpg'},
-          {image: 'http://images.baixingliangfan.cn/advertesPicture/20180407/20180407175111_9509.jpg'},
-          {image: 'http://images.baixingliangfan.cn/advertesPicture/20180407/20180407175142_6947.jpg'}
-        ],
-        category: [],
-        adBanner: {},
-        recommendGoods: [],
-        floor1: [],
-        floor2: [],
-        floor3: [],
-        floorName: {},
-        hotGoods: [],  //热卖商品
-      }
-    },
-    created () {
-      axios({
-        //  url: 'https://www.easy-mock.com/mock/5ae2eeb23fbbf24d8cd7f0b6/SmileVue/index',
-         url: url.getShopingMallInfo,
-         method: 'get'
-      }).then(response => {
-        console.log(response)
-        if(response.status === 200) {
-          const result = response.data.data
-          this.category = result.category
-          this.adBanner = result.advertesPicture //获得广告图片
-          this.bannerArray = result.slides   //轮播图片
-          this.recommendGoods = result.recommend  //推荐商品
-          this.floor1 = result.floor1
-          this.floor2 = result.floor2
-          this.floor3 = result.floor3
-          this.floorName = result.floorName
-          this.hotGoods = result.hotGoods  // 热门商品
-        }
-      }).catch((error) => {
-        console.log(error)
-      })
-    },
-    filters: {
-      moneyFilter(money) {
-        return toMoney(money)
-      }
-    },
-    components: {
-      // SwiperDefault,
-      swiper,
-      swiperSlide,
-      FloorComponent,
-      GoodsInfoComponent
+import axios from 'axios'
+import url from '@/api/serviceAPI.config.js'
+import { toMoney } from '@/filter/moneyFilter.js'
+import 'swiper/dist/css/swiper.css'
+import { swiper, swiperSlide } from 'vue-awesome-swiper'
+// import SwiperDefault from '../components/swiper/swiper-default4'
+import FloorComponent from '@/components/floor-component'
+import GoodsInfoComponent from '@/components/goods-info-component'
+export default {
+  name: 'ShoppingMall',
+  data () {
+    return {
+      swiperOption:{
+        slidesPerView:3
+      },
+      locationIcon: require('../assets/images/aui-icon-location.png'),
+      bannerArray: [
+        {image: 'http://images.baixingliangfan.cn/advertesPicture/20180407/20180407175040_1780.jpg'},
+        {image: 'http://images.baixingliangfan.cn/advertesPicture/20180407/20180407175111_9509.jpg'},
+        {image: 'http://images.baixingliangfan.cn/advertesPicture/20180407/20180407175142_6947.jpg'}
+      ],
+      category: [],
+      adBanner: {},
+      recommendGoods: [],
+      floor1: [],
+      floor2: [],
+      floor3: [],
+      floorName: {},
+      hotGoods: [],  //热卖商品
     }
+  },
+  created () {
+    axios({
+      //  url: 'https://www.easy-mock.com/mock/5ae2eeb23fbbf24d8cd7f0b6/SmileVue/index',
+        url: url.getShopingMallInfo,
+        method: 'get'
+    }).then(response => {
+      console.log(response)
+      if(response.status === 200) {
+        const result = response.data.data
+        this.category = result.category
+        this.adBanner = result.advertesPicture //获得广告图片
+        this.bannerArray = result.slides   //轮播图片
+        this.recommendGoods = result.recommend  //推荐商品
+        this.floor1 = result.floor1
+        this.floor2 = result.floor2
+        this.floor3 = result.floor3
+        this.floorName = result.floorName
+        this.hotGoods = result.hotGoods  // 热门商品
+      }
+    }).catch((error) => {
+      console.log(error)
+    })
+  },
+  filters: {
+    moneyFilter (money) {
+      return toMoney(money)
+    }
+  },
+  components: {
+    // SwiperDefault,
+    swiper,
+    swiperSlide,
+    FloorComponent,
+    GoodsInfoComponent
   }
+}
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
