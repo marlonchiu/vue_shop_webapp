@@ -4,6 +4,13 @@ const mongoose = require('mongoose')
 // 引入connect
 const { connect, initSchemas } = require('./database/init.js')
 const Router = require('koa-router')
+const bodyParser = require('koa-bodyparser')
+const cors = require('koa2-cors')
+
+// 注册和引入中间件
+app.use(bodyParser())
+// 让koa2支持跨域请求
+app.use(cors())
 
 // 引入user路由
 let user = require('./appApi/user.js')
@@ -20,7 +27,7 @@ app.use(router.allowedMethods())
   await connect()
   initSchemas()
 
-  // 测试插入一条数据
+  // 测试插入一条数 据
   const User = mongoose.model('User')
   let oneUser = new User({ userName: 'jspang', password: '123456' })
   oneUser.save().then(() => {
