@@ -34,7 +34,15 @@
 </template>
 
 <script>
+/**
+ * 前端交互效果制作
+ * 返回登录成功时，给用户一个Toast提示，
+ * 并跳转到首页（其实正常应该跳转到个人中心，但是我们还没有制作），
+ * 当返回登录失败的时候，要提示用户登录失败，
+ * 并把登录按钮重新启用，可以再次登录。
+ */
 import axios from 'axios'
+import storage from 'good-storage'
 import url from '@/api/serviceAPI.config.js'
 import { Toast } from 'vant'
 export default {
@@ -46,6 +54,13 @@ export default {
       openLoading: false, // 是否开启用户登录的Loading
       userNameErrorMsg: '', // 当用户名出现错误的时候
       passwordErrorMsg: '' // 当密码出现错误的时候
+    }
+  },
+  created () {
+    // 判断是否已经登录过
+    if (storage.get('userInfo')) {
+      Toast.success('您已经登录！')
+      this.$router.push('/')
     }
   },
   methods: {
@@ -84,19 +99,31 @@ export default {
         }
       }).then((response) => {
         console.log(response)
-        // 如果返回code为200，代表注册成功，我们给用户作Toast提示
-        if (response.data.code === 200) {
-          // Toast.success('注册成功')
-          Toast.success(response.data.message)
-          this.$router.push('/')
+        // 如果返回code为200，代表登录成功，我们给用户作Toast提示
+        // response.data.message 成功返回的匹配正确 true
+        if (response.data.code === 200 && response.data.message) {
+          // 登录成功先保存登录信息
+          new Promise((resolve, reject) => {
+            let userInfo = {
+              userName: this.userName
+            }
+            storage.set('userInfo', userInfo)
+            setTimeout(() => { resolve() }, 200)
+          }).then(() => {
+            Toast.success('登录成功')
+            this.$router.push('/')
+          }).catch(err => {
+            Toast.fail('登录状态保存失败')
+            console.log(err)
+          })
         } else {
           // console.log(response.data.message)
-          Toast.fail('注册失败')
+          Toast.fail('登录失败')
           this.openLoading = false
         }
       }).catch((error) => {
         console.log(error)
-        Toast.fail('注册失败')
+        Toast.fail('登录失败')
         this.openLoading = false
       })
     }

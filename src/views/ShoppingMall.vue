@@ -89,14 +89,14 @@ export default {
   name: 'ShoppingMall',
   data () {
     return {
-      swiperOption:{
-        slidesPerView:3
+      swiperOption: {
+        slidesPerView: 3
       },
       locationIcon: require('../assets/images/aui-icon-location.png'),
       bannerArray: [
-        {image: 'http://images.baixingliangfan.cn/advertesPicture/20180407/20180407175040_1780.jpg'},
-        {image: 'http://images.baixingliangfan.cn/advertesPicture/20180407/20180407175111_9509.jpg'},
-        {image: 'http://images.baixingliangfan.cn/advertesPicture/20180407/20180407175142_6947.jpg'}
+        { image: 'http://images.baixingliangfan.cn/advertesPicture/20180407/20180407175040_1780.jpg' },
+        { image: 'http://images.baixingliangfan.cn/advertesPicture/20180407/20180407175111_9509.jpg' },
+        { image: 'http://images.baixingliangfan.cn/advertesPicture/20180407/20180407175142_6947.jpg' }
       ],
       category: [],
       adBanner: {},
@@ -105,27 +105,27 @@ export default {
       floor2: [],
       floor3: [],
       floorName: {},
-      hotGoods: [],  //热卖商品
+      hotGoods: [] // 热卖商品
     }
   },
   created () {
     axios({
       //  url: 'https://www.easy-mock.com/mock/5ae2eeb23fbbf24d8cd7f0b6/SmileVue/index',
-        url: url.getShopingMallInfo,
-        method: 'get'
+      url: url.getShopingMallInfo,
+      method: 'get'
     }).then(response => {
       console.log(response)
-      if(response.status === 200) {
+      if (response.status === 200) {
         const result = response.data.data
         this.category = result.category
-        this.adBanner = result.advertesPicture //获得广告图片
-        this.bannerArray = result.slides   //轮播图片
-        this.recommendGoods = result.recommend  //推荐商品
+        this.adBanner = result.advertesPicture // 获得广告图片
+        this.bannerArray = result.slides // 轮播图片
+        this.recommendGoods = result.recommend // 推荐商品
         this.floor1 = result.floor1
         this.floor2 = result.floor2
         this.floor3 = result.floor3
         this.floorName = result.floorName
-        this.hotGoods = result.hotGoods  // 热门商品
+        this.hotGoods = result.hotGoods // 热门商品
       }
     }).catch((error) => {
       console.log(error)
