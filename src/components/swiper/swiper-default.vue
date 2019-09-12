@@ -1,12 +1,12 @@
 <template>
   <div>
     <swiper class="swiper" :options='swiperOption'>
-        <swiper-slide class="swiper-slide" v-for="(item, index) in slide" :key="index">
-          Slide {{item}}
-        </swiper-slide>
-        <!-- 添加分分页器 -->
-        <div class="swiper-pagination" slot="pagination"></div>
-      </swiper>
+      <swiper-slide class="swiper-slide" v-for="(item, index) in slide" :key="index">
+        Slide {{item}}
+      </swiper-slide>
+      <!-- 添加分分页器 -->
+      <div class="swiper-pagination" slot="pagination"></div>
+    </swiper>
   </div>
 </template>
 
