@@ -3,6 +3,17 @@ const app = new Koa()
 const mongoose = require('mongoose')
 // 引入connect
 const { connect, initSchemas } = require('./database/init.js')
+const Router = require('koa-router')
+
+// 引入user路由
+let user = require('./appApi/user.js')
+// 挂载所有的子路由
+let router = new Router()
+router.use('/user', user.routes())
+
+// 加载路由中间件
+app.use(router.routes())
+app.use(router.allowedMethods())
 
 // 立即执行函数
 ; (async () => {
