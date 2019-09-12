@@ -1,6 +1,6 @@
 const Koa = require('koa')
 const app = new Koa()
-const mongoose = require('mongoose')
+// const mongoose = require('mongoose')
 // 引入connect
 const { connect, initSchemas } = require('./database/init.js')
 const Router = require('koa-router')
@@ -14,9 +14,11 @@ app.use(cors())
 
 // 引入user路由
 let user = require('./appApi/user.js')
+let goods = require('./appApi/goods.js')
 // 挂载所有的子路由
 let router = new Router()
 router.use('/user', user.routes())
+router.use('/goods', goods.routes())
 
 // 加载路由中间件
 app.use(router.routes())
@@ -28,17 +30,17 @@ app.use(router.allowedMethods())
   initSchemas()
 
   // 测试插入一条数 据
-  const User = mongoose.model('User')
-  let oneUser = new User({ userName: 'jspang', password: '123456' })
-  oneUser.save().then(() => {
-    console.log('插入成功')
-  })
+  // const User = mongoose.model('User')
+  // let oneUser = new User({ userName: 'jspang', password: '123456' })
+  // oneUser.save().then(() => {
+  //   console.log('插入成功')
+  // })
 
-  // 测试读取插入的数据
-  let users = await User.findOne({}).exec()
-  console.log('------------------')
-  console.log(users)
-  console.log('------------------')
+  // // 测试读取插入的数据
+  // let users = await User.findOne({}).exec()
+  // console.log('------------------')
+  // console.log(users)
+  // console.log('------------------')
 })()
 
 // 验证测试是否连接成功
