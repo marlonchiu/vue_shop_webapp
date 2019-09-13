@@ -3,6 +3,7 @@ import Router from 'vue-router'
 const ShoppingMall = () => import('@/views/ShoppingMall.vue')
 const Register = () => import('@/views/Register.vue')
 const Login = () => import('@/views/Login.vue')
+const Goods = () => import('@/views/Goods.vue')
 
 const routes = [
   {
@@ -19,6 +20,11 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: Login
+  },
+  {
+    path: '/goods',
+    name: 'Goods',
+    component: Goods
   }
 ]
 
