@@ -4,6 +4,7 @@ const ShoppingMall = () => import('@/views/ShoppingMall.vue')
 const Register = () => import('@/views/Register.vue')
 const Login = () => import('@/views/Login.vue')
 const Goods = () => import('@/views/Goods.vue')
+const CategoryList = () => import('@/views/CategoryList.vue')
 
 const routes = [
   {
@@ -25,6 +26,11 @@ const routes = [
     path: '/goods',
     name: 'Goods',
     component: Goods
+  },
+  {
+    path: '/categoryList',
+    name: 'CategoryList',
+    component: CategoryList
   }
 ]
 
