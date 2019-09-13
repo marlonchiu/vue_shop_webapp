@@ -27,13 +27,13 @@
           <div id="list-div">
             <van-pull-refresh v-model="isRefresh" @refresh="onRefresh">
               <van-list v-model="loading" :finished="finished" @load="onLoad">
-                <div class="list-item" v-for="(item, index) in goodsList" :key="index">
+                <div class="list-item" @click="goGoodsInfo(item.ID)" v-for="(item, index) in goodsList" :key="index">
                   <div class="list-item-img">
-                    <img :src="item.IMAGE1" width="100%"/>
+                    <img :src="item.IMAGE1" width="100%" onerror="errorImg"/>
                   </div>
                   <div class="list-item-text">
                     <div class="list-item-name">{{item.NAME}}</div>
-                    <div class="list-item-price">￥{{item.ORI_PRICE}}</div>
+                    <div class="list-item-price">￥{{item.ORI_PRICE | moneyFilter}}</div>
                   </div>
                 </div>
               </van-list>
@@ -63,11 +63,13 @@ export default {
       isRefresh: false, // 下拉加载
       page: 1, // 商品列表的页数
       goodsList: [], // 商品信息
-      categorySubId: '' // 商品子分类ID
+      categorySubId: '', // 商品子分类ID
+      errorImg: 'this.src="' + require('@/assets/images/errorimg.png') + '"' // 错误图片显示路径
     }
   },
   created () {
     this.getCategory()
+    console.log(this.errorImg)
   },
   mounted () {
     let winHeight = document.documentElement.clientHeight
@@ -133,7 +135,7 @@ export default {
           this.finished = true
         }
         this.loading = false
-        console.log(this.finished)
+        // console.log(this.finished)
       }).catch(error => {
         console.log(error)
       })
@@ -150,7 +152,7 @@ export default {
     // 点击子类获取商品信息
     onClickCategorySub (index, title) {
       this.categorySubId = this.categorySub[index].ID
-      console.log(this.categorySubId)
+      // console.log(this.categorySubId)
       // 切换时候的操作
       this.goodsList = []
       this.finished = false
@@ -159,7 +161,7 @@ export default {
     },
     // 用于实现上拉加载
     onLoad () {
-      console.log('上滑加载更多')
+      // console.log('上滑加载更多')
       setTimeout(() => {
         // 子类ID
         this.categorySubId = this.categorySubId ? this.categorySubId : this.categorySub[0].ID
@@ -178,9 +180,19 @@ export default {
     onRefresh () {
       setTimeout(() => {
         this.isRefresh = false
-        this.list = []
+        this.finished= false
+        this.goodsList = []
+        this.page = 1
         this.onLoad()
       }, 500)
+    },
+    goGoodsInfo (id) {
+      this.$router.push({
+        name: 'Goods',
+        params: {
+          goodsId: id
+        }
+      })
     }
   },
   filters: {

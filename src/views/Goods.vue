@@ -19,7 +19,7 @@
           <div class="tab-goods-detail" v-html="goodsInfo.DETAIL"></div>
         </van-tab>
         <van-tab title="商品评价">
-          正在制作中
+          评论制作中
         </van-tab>
       </van-tabs>
     </div>
@@ -43,11 +43,12 @@ export default {
   name: 'Goods',
   data () {
     return {
-      goodsId: '00b417a0f3444bb6965f4ba2dbafbed0',
+      goodsId: '',
       goodsInfo: {} // 商品详细信息
     }
   },
   created () {
+    this.goodsId = this.$route.query.goodsId ? this.$route.query.goodsId : this.$route.params.goodsId
     this.getGoodsInfo(this.goodsId)
   },
   methods: {
