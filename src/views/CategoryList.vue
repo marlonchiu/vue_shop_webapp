@@ -180,7 +180,7 @@ export default {
     onRefresh () {
       setTimeout(() => {
         this.isRefresh = false
-        this.finished= false
+        this.finished = false
         this.goodsList = []
         this.page = 1
         this.onLoad()
@@ -204,36 +204,36 @@ export default {
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
-    #leftNav{
-        background-color: aliceblue;
-    }
-    #leftNav ul li {
-        line-height: 2rem;
-        border-bottom: 1px solid #E4E7ED;
-        padding:3px;
-        font-size:0.8rem;
-        text-align: center;
-    }
-    .categoryActive{
-        background-color: #fff;
-    }
-    .list-item{
-        display: flex;
-        flex-direction: row;
-        font-size:0.8rem;
-        border-bottom: 1px solid #f0f0f0;
-        background-color: #fff;
-        padding:5px;
-    }
-    #list-div{
-        overflow: scroll;
-    }
-    .list-item-img{
-        flex:8;
-    }
-    .list-item-text{
-        flex:16;
-        margin-top:10px;
-        margin-left:10px;
-    }
+#leftNav {
+  background-color: aliceblue;
+}
+#leftNav ul li {
+  line-height: 2rem;
+  border-bottom: 1px solid #E4E7ED;
+  padding: 3px;
+  font-size: 0.8rem;
+  text-align: center;
+}
+.categoryActive {
+  background-color: #fff;
+}
+.list-item {
+  display: flex;
+  flex-direction: row;
+  font-size: 0.8rem;
+  border-bottom: 1px solid #f0f0f0;
+  background-color: #fff;
+  padding: 5px;
+}
+#list-div {
+  overflow: scroll;
+}
+.list-item-img {
+  flex: 8;
+}
+.list-item-text {
+  flex: 16;
+  margin-top: 10px;
+  margin-left: 10px;
+}
 </style>
