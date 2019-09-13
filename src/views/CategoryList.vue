@@ -19,7 +19,7 @@
         </van-col>
         <van-col span="18">
           <div class="tabCategorySub">
-            <van-tabs v-model="active">
+            <van-tabs v-model="active" @click="onClickCategorySub">
               <van-tab v-for="(item, index) in categorySub" :key="index" :title="item.MALL_SUB_NAME">
               </van-tab>
             </van-tabs>
@@ -27,8 +27,14 @@
           <div id="list-div">
             <van-pull-refresh v-model="isRefresh" @refresh="onRefresh">
               <van-list v-model="loading" :finished="finished" @load="onLoad">
-                <div class="list-item" v-for="(item, index) in list" :key="index">
-                  {{item}}
+                <div class="list-item" v-for="(item, index) in goodsList" :key="index">
+                  <div class="list-item-img">
+                    <img :src="item.IMAGE1" width="100%"/>
+                  </div>
+                  <div class="list-item-text">
+                    <div class="list-item-name">{{item.NAME}}</div>
+                    <div class="list-item-price">￥{{item.ORI_PRICE}}</div>
+                  </div>
                 </div>
               </van-list>
             </van-pull-refresh>
@@ -50,12 +56,14 @@ export default {
     return {
       category: [], // 商品大类信息
       categoryIndex: 0, // 大类激活选择
-      categorySub: [],  // 商品小类信息
+      categorySub: [], // 商品小类信息
       active: 0, // 激活标签的值
-      list: [], // 子类信息列表
       loading: false, // 上拉加载使用
       finished: false, // 下拉加载是否没有数据了
       isRefresh: false, // 下拉加载
+      page: 1, // 商品列表的页数
+      goodsList: [], // 商品信息
+      categorySubId: '' // 商品子分类ID
     }
   },
   created () {
@@ -63,7 +71,7 @@ export default {
   },
   mounted () {
     let winHeight = document.documentElement.clientHeight
-    document.getElementById("leftNav").style.height = winHeight - 46 + 'px'
+    document.getElementById('leftNav').style.height = winHeight - 46 + 'px'
     document.getElementById('list-div').style.height = winHeight - 90 + 'px'
   },
   methods: {
@@ -96,6 +104,10 @@ export default {
         console.log(response)
         if (response.data.code === 200 && response.data.message) {
           this.categorySub = response.data.message
+          // 切换大类 ID
+          this.active = 0
+          this.categorySubId = this.categorySub[0].ID
+          this.onLoad()
         } else {
           Toast('服务器错误，数据获取失败')
         }
@@ -103,23 +115,63 @@ export default {
         console.log(error)
       })
     },
+    // 获取商品列表
+    getGoodsList (categorySubId, page) {
+      axios({
+        url: url.getGoodsListByCategorySubID,
+        method: 'post',
+        data: {
+          categorySubId,
+          page
+        }
+      }).then(response => {
+        console.log(response)
+        if (response.data.code === 200 && response.data.message.length) {
+          this.page++
+          this.goodsList = this.goodsList.concat(response.data.message)
+        } else {
+          this.finished = true
+        }
+        this.loading = false
+        console.log(this.finished)
+      }).catch(error => {
+        console.log(error)
+      })
+    },
     // 点击大类的方法
     clickCategory (index, categoryId) {
       this.categoryIndex = index
+      // 大类切换数据初始化
+      this.goodsList = []
+      this.finished = false
+      this.page = 1
       this.getCategorySubByCategoryId(categoryId)
+    },
+    // 点击子类获取商品信息
+    onClickCategorySub (index, title) {
+      this.categorySubId = this.categorySub[index].ID
+      console.log(this.categorySubId)
+      // 切换时候的操作
+      this.goodsList = []
+      this.finished = false
+      this.page = 1
+      this.onLoad()
     },
     // 用于实现上拉加载
     onLoad () {
-      console.log('上滑加载g更多')
+      console.log('上滑加载更多')
       setTimeout(() => {
-        for(let i = 0; i < 10; i++) {
-          this.list.push(this.list.length + 1)
-        }
-        // 加载状态结束
-        this.loading = false
-        if(this.list.length >= 40) {
-          this.finished = true
-        }
+        // 子类ID
+        this.categorySubId = this.categorySubId ? this.categorySubId : this.categorySub[0].ID
+        this.getGoodsList(this.categorySubId, this.page)
+        // for(let i = 0; i < 10; i++) {
+        //   this.list.push(this.list.length + 1)
+        // }
+        // // 加载状态结束
+        // this.loading = false
+        // if(this.list.length >= 40) {
+        //   this.finished = true
+        // }
       }, 500)
     },
     // 下拉刷新
