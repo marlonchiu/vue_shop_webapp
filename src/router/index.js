@@ -6,12 +6,36 @@ const Login = () => import('@/views/Login.vue')
 const Goods = () => import('@/views/Goods.vue')
 const CategoryList = () => import('@/views/CategoryList.vue')
 const Cart = () => import('@/views/Cart.vue')
+const Member = () => import('@/views/Member.vue')
+const Main = () => import('@/views/Main.vue')
 
 const routes = [
   {
-    path: '/',
-    name: 'ShoppingMall',
-    component: ShoppingMall
+    path: '/main',
+    name: 'Main',
+    component: Main,
+    children: [
+      {
+        path: '/',
+        name: 'ShoppingMall',
+        component: ShoppingMall
+      },
+      {
+        path: '/categoryList',
+        name: 'CategoryList',
+        component: CategoryList
+      },
+      {
+        path: '/cart',
+        name: 'Cart',
+        component: Cart
+      },
+      {
+        path: '/member',
+        name: 'Member',
+        component: Member
+      }
+    ]
   },
   {
     path: '/register',
@@ -27,16 +51,6 @@ const routes = [
     path: '/goods/:goodsId',
     name: 'Goods',
     component: Goods
-  },
-  {
-    path: '/categoryList',
-    name: 'CategoryList',
-    component: CategoryList
-  },
-  {
-    path: '/cart',
-    name: 'Cart',
-    component: Cart
   }
 ]
 
