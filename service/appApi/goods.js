@@ -27,7 +27,53 @@ router.get('/insertAllGoodsInfo', async (ctx) => {
     })
   })
 
-  ctx.body = '开始导入数据'
+  ctx.body = '开始导入商品信息数据'
+})
+
+// 插入商品大类信息
+router.get('/insertAllCategory', async (ctx) => {
+  fs.readFile('./data_json/category.json', 'utf-8', (err, data) => {
+    console.log(err)
+    data = JSON.parse(data)
+    let saveCount = 0
+    const Category = mongoose.model('Category')
+    data.RECORDS.map((value, index) => {
+      // console.log(value)
+      let newCategory = new Category(value)
+      // 用mongoose的save方法直接存储，然后判断是否成功，返回相应的结果
+      newCategory.save().then(() => {
+        saveCount++
+        console.log('成功' + saveCount)
+      }).catch(error => {
+        console.log('失败：' + error)
+      })
+    })
+  })
+
+  ctx.body = '开始导入商品大类数据...'
+})
+
+// 插入商品子类信息
+router.get('/insertAllCategorySub', async (ctx) => {
+  fs.readFile('./data_json/category_sub.json', 'utf-8', (err, data) => {
+    console.log(err)
+    data = JSON.parse(data)
+    let saveCount = 0
+    const CategorySub = mongoose.model('CategorySub')
+    data.RECORDS.map((value, index) => {
+      // console.log(value)
+      let newCategorySub = new CategorySub(value)
+      // 用mongoose的save方法直接存储，然后判断是否成功，返回相应的结果
+      newCategorySub.save().then(() => {
+        saveCount++
+        console.log('成功' + saveCount)
+      }).catch(error => {
+        console.log('失败：' + error)
+      })
+    })
+  })
+
+  ctx.body = '开始导入商品子类数据...'
 })
 
 module.exports = router
