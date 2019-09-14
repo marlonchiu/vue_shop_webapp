@@ -11,12 +11,13 @@ const Main = () => import('@/views/Main.vue')
 
 const routes = [
   {
-    path: '/main',
+    path: '/',
     name: 'Main',
     component: Main,
+    redirect: '/home',
     children: [
       {
-        path: '/',
+        path: '/home',
         name: 'ShoppingMall',
         component: ShoppingMall
       },

@@ -13,10 +13,12 @@ app.use(bodyParser())
 app.use(cors())
 
 // 引入user路由
+let home = require('./appApi/home.js')
 let user = require('./appApi/user.js')
 let goods = require('./appApi/goods.js')
 // 挂载所有的子路由
 let router = new Router()
+router.use('/home', home.routes())
 router.use('/user', user.routes())
 router.use('/goods', goods.routes())
 
